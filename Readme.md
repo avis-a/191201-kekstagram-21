@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Alina Glebova](https://up.htmlacademy.ru/javascript/21/user/191201).
-* Наставник: `Неизвестно`.
+* Наставник: [Яна Казанина](https://up.htmlacademy.ru/javascript/21/user/1275245).
 
 ---
 
