@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var commentsArray = [
   'Всё отлично!',
@@ -18,6 +18,18 @@ var namesArray = [
   'Даша'
 ];
 
+const COMMENTS = {
+  min: 1,
+  max: 5,
+};
+
+const LIKES = {
+  min: 15,
+  max: 200,
+};
+
+const COUNT_PHOTOS = 25;
+
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
@@ -25,30 +37,30 @@ function getRandomInt(min, max) {
 var createComments = function () {
   let commentsRandom = [];
 
-  let randomCommentsCount = getRandomInt(1, 5);
+  let randomCommentsCount = getRandomInt(COMMENTS.min, COMMENTS.max);
   for (let i = 0; i < randomCommentsCount; i++) {
-    commentsRandom[i] = {
+    commentsRandom.push({
       avatar: `img/avatar-${getRandomInt(1, 10)}.svg`,
       message: commentsArray[getRandomInt(0, commentsArray.length - 1)],
       name: namesArray[getRandomInt(0, namesArray.length - 1)],
-    }
+    });
   }
 
   return commentsRandom;
-}
+};
 
 var generateRandomPhotos = function () {
-  let array = [];
+  let photos = [];
 
-  for (var i = 0; i < 25; i++) {
-    array[i] = {
+  for (var i = 0; i < COUNT_PHOTOS; i++) {
+    photos[i] = {
       url: `photos/${i}.jpg`,
       description: 'test',
-      likes: getRandomInt(15, 200),
+      likes: getRandomInt(LIKES.min, LIKES.max),
       comments: createComments()
-    }
+    };
   }
-  return array;
+  return photos;
 };
 
 // Функция для создания DOM элемента по шаблону
@@ -60,19 +72,20 @@ var createPhotoDOMElement = function (template, photo) {
   pictureTemplate.querySelector('.picture__comments').textContent = photo.comments.length;
 
   return pictureTemplate;
-}
+};
 
 // Добавляет массив фотографий в разметку
-var appendPhotos = function (photoArray) {
-  let pictures = document.querySelector('.pictures');
-  let photos = generateRandomPhotos();
+var appendPhotos = function (photos) {
+  let documentFragment = document.createDocumentFragment(photos);
 
-  for (var photo of photoArray) {
+  photos.forEach(function (photo) {
     var pictureTemplate = document.querySelector('#picture').content;
     var pictureDOM = createPhotoDOMElement(pictureTemplate, photo);
-    pictures.appendChild(pictureDOM);
-  }
-}
+    documentFragment.append(pictureDOM);
+  });
+
+  document.querySelector('.pictures').appendChild(documentFragment);
+};
 
 let photos = generateRandomPhotos();
 appendPhotos(photos);
