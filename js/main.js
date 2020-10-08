@@ -28,7 +28,20 @@ const LIKES = {
   max: 200,
 };
 
+const ZOOM_STEP = 25;
+
+const ZOOM_LIMITS = {
+  min: 25,
+  max: 100
+};
+
 const COUNT_PHOTOS = 25;
+
+const HASHTAGS_LENGTH = 5;
+
+const EFFECT_VALUE = 100;
+
+const re = /^#[A-я\d]*$/;
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
@@ -97,20 +110,20 @@ var uploadOverlay = document.querySelector('.img-upload__overlay');
 
 var hashtagInput = document.querySelector('.text__hashtags');
 
-uploadFile.onchange = function () {
+uploadFile.addEventListener('change', function () {
   uploadOverlay.classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');
   document.addEventListener('keydown', escPress);
-};
+});
 
 let closeModal = function () {
   uploadOverlay.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
 };
 
-uploadCancel.onclick = function () {
+uploadCancel.addEventListener('click', function () {
   closeModal();
-};
+});
 
 var escPress = function (evt) {
   if (evt.key === 'Escape' && document.activeElement !== hashtagInput) {
@@ -129,37 +142,27 @@ const EFFECT_VALUES = {
   'chrome': {
     min: 0,
     max: 1,
-    getFilter(value) {
-      return `grayscale(${value})`;
-    }
+    template: 'grayscale({value})'
   },
   'sepia': {
     min: 0,
     max: 1,
-    getFilter(value) {
-      return `sepia(${value})`;
-    }
+    template: 'sepia({value})'
   },
   'marvin': {
     min: 0,
     max: 100,
-    getFilter(value) {
-      return `invert(${value}%)`;
-    }
+    template: 'invert({value}%)'
   },
   'phobos': {
     min: 0,
     max: 3,
-    getFilter(value) {
-      return `blur(${value}px)`;
-    }
+    template: 'blur({value}px)'
   },
   'heat': {
     min: 1,
     max: 3,
-    getFilter(value) {
-      return `brightness(${value})`;
-    }
+    template: 'brightness({value})'
   },
 };
 
@@ -167,22 +170,24 @@ let effectsIntensive = function (effect) {
   if (effect.value !== 'none') {
     let min = EFFECT_VALUES[effect.value].min;
     let max = EFFECT_VALUES[effect.value].max;
+    let template = EFFECT_VALUES[effect.value].template;
+
     let result = min + ((max - min) / 100 * effectLevelValue.value);
-    imgPreview.style = 'filter: ' + EFFECT_VALUES[effect.value].getFilter(result);
+    imgPreview.style = 'filter: ' + template.replace('{value}', result);
   } else {
     imgPreview.style = null;
   }
 };
 
 effects.forEach(function (effect) {
-  effect.onchange = function () {
+  effect.addEventListener('change', function () {
     imgPreview.classList = null;
     imgPreview.classList.add('img-upload__preview');
     imgPreview.classList.add('effects__preview--' + effect.value);
 
-    effectLevelValue.value = 100;
+    effectLevelValue.value = EFFECT_VALUE;
     effectsIntensive(effect);
-  };
+  });
 });
 
 effectLevel.mouseup = function () {
@@ -196,14 +201,7 @@ var controlBigger = document.querySelector('.scale__control--bigger');
 var controlValue = document.querySelector('.scale__control--value');
 controlValue.value = '100%';
 
-const ZOOM_STEP = 25;
-
-const ZOOM_LIMITS = {
-  min: 25,
-  max: 100
-};
-
-controlSmaller.onclick = function () {
+controlSmaller.addEventListener('click', function () {
   let percentNumber = Number(controlValue.value.replace('%', ''));
   percentNumber -= ZOOM_STEP;
 
@@ -211,9 +209,9 @@ controlSmaller.onclick = function () {
     controlValue.value = percentNumber + '%';
     imgPreview.style = `transform: scale(${percentNumber / 100})`;
   }
-};
+});
 
-controlBigger.onclick = function () {
+controlBigger.addEventListener('click', function () {
   let percentNumber = Number(controlValue.value.replace('%', ''));
   percentNumber += ZOOM_STEP;
 
@@ -221,18 +219,15 @@ controlBigger.onclick = function () {
     controlValue.value = percentNumber + '%';
     imgPreview.style = `transform: scale(${percentNumber / 100})`;
   }
-};
+});
 
 // Валидация хеш-тегов
-
-const re = /^#[A-я\d]*$/;
-
-hashtagInput.addEventListener(`input`, function () {
+hashtagInput.addEventListener('input', function () {
   let hashtags = hashtagInput.value.split(' ').filter((x) => x !== '');
 
   if (hashtags.length === 0) {
     return;
-  } else if (hashtags.length > 5) {
+  } else if (hashtags.length > HASHTAGS_LENGTH) {
     hashtagInput.setCustomValidity('Нельзя указать больше пяти хэш-тегов.');
     return;
   }
