@@ -25,6 +25,7 @@
     document.querySelector('.pictures').appendChild(documentFragment);
   };
 
-  let photos = window.data.generateRandomPhotos();
-  appendPhotos(photos);
+  window.gallery = {
+    appendPhotos
+  };
 })();
