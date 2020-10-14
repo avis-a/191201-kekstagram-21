@@ -4,8 +4,8 @@
 // window.gallery.appendPhotos(photos);
 
 (function () {
-  var onError = function (message) {
-    console.error(message);
+  var onError = function () {
+    // console.error(message);
   };
 
   var onSuccess = function (data) {
