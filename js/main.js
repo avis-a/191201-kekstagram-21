@@ -1,11 +1,10 @@
 'use strict';
 
-// const photos = window.data.generateRandomPhotos();
-// window.gallery.appendPhotos(photos);
-
 (function () {
-  var onError = function () {
-    // console.error(message);
+  var onError = function (message) {
+    let errorTemplate = document.querySelector('#server-error').content;
+    errorTemplate.querySelector('.server-error__title').textContent = message;
+    document.querySelector('body').appendChild(errorTemplate);
   };
 
   var onSuccess = function (data) {
