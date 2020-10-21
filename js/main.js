@@ -20,7 +20,7 @@
     window.gallery.appendPhotos(data);
 
     document.querySelector('.img-filters').classList.remove('img-filters--inactive');
-    window.gallery.handleFilterButtons(data);
+    window.filter.handleFilterButtons(data);
   };
 
   window.load(serverUrl, onSuccess, onError);
