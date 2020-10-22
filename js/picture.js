@@ -15,37 +15,37 @@
   const re = /^#[A-я\d]*$/;
 
   // Применение эффекта для изображения
-  let effects = document.querySelectorAll('.effects__radio');
-  let imgPreview = document.querySelector('.img-upload__preview');
-  let effectLevel = document.querySelector('.effect-level__pin');
-  let effectLevelValue = document.querySelector('.effect-level__value');
-  let hashtagInput = document.querySelector('.text__hashtags');
+  let effects = document.querySelectorAll(`.effects__radio`);
+  let imgPreview = document.querySelector(`.img-upload__preview`);
+  let effectLevel = document.querySelector(`.effect-level__pin`);
+  let effectLevelValue = document.querySelector(`.effect-level__value`);
+  let hashtagInput = document.querySelector(`.text__hashtags`);
 
   const EFFECT_VALUES = {
     'chrome': {
       min: 0,
       max: 1,
-      template: 'grayscale({value})'
+      template: `grayscale({value})`
     },
     'sepia': {
       min: 0,
       max: 1,
-      template: 'sepia({value})'
+      template: `sepia({value})`
     },
     'marvin': {
       min: 0,
       max: 100,
-      template: 'invert({value}%)'
+      template: `invert({value}%)`
     },
     'phobos': {
       min: 0,
       max: 3,
-      template: 'blur({value}px)'
+      template: `blur({value}px)`
     },
     'heat': {
       min: 1,
       max: 3,
-      template: 'brightness({value})'
+      template: `brightness({value})`
     },
   };
 
