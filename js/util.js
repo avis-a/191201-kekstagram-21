@@ -3,7 +3,7 @@
   const DEBOUNCE_INTERVAL = 300;
 
   window.util = {
-    getRandomInt: function (min, max) {
+    getRandomInt(min, max) {
       return Math.floor(Math.random() * (max - min)) + min;
     },
 
