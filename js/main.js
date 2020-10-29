@@ -2,8 +2,9 @@
 
 (function () {
   const serverUrl = `https://21.javascript.pages.academy/kekstagram/data`;
+  let bigPicture = document.querySelector(`.big-picture`);
 
-  // Функция для создания DOM элемента по шаблону
+  // Функция для создания блока комментария
   let createCommentDOMElement = function (template, comment) {
     let commentTemplate = template.cloneNode(true);
 
@@ -12,6 +13,19 @@
     commentTemplate.querySelector(`.social__text`).textContent = comment.message;
 
     return commentTemplate;
+  };
+
+
+  let closeModal = function () {
+    bigPicture.classList.add(`hidden`);
+    document.querySelector(`body`).classList.remove(`modal-open`);
+  };
+
+  let escPress = function (evt) {
+    if (evt.key === `Escape`) {
+      evt.preventDefault();
+      closeModal();
+    }
   };
 
   let onError = function (message) {
@@ -34,11 +48,15 @@
     window.filter.handleFilterButtons(data);
 
     let littlePictures = document.querySelectorAll(`a.picture`);
-    let bigPicture = document.querySelector(`.big-picture`);
+
+    let bigPictureCancel = document.querySelector(`.big-picture__cancel`);
 
     littlePictures.forEach(function (littlePicture) {
       littlePicture.addEventListener(`click`, function () {
         bigPicture.classList.remove(`hidden`);
+        document.querySelector(`body`).classList.add(`modal-open`);
+        document.addEventListener(`keydown`, escPress);
+
         let littlePictureUrl = littlePicture.querySelector(`.picture__img`).getAttribute(`src`);
         let littlePictureData = data.find((photo) => photo.url === littlePictureUrl);
 
@@ -59,9 +77,11 @@
 
         bigPicture.querySelector(`.social__comment-count`).classList.add(`hidden`);
         bigPicture.querySelector(`.comments-loader`).classList.add(`hidden`);
-
-        document.querySelector(`body`).classList.add(`modal-open`);
       });
+    });
+
+    bigPictureCancel.addEventListener(`click`, function () {
+      closeModal();
     });
   };
 
