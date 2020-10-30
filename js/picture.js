@@ -19,6 +19,7 @@
   let imgPreview = document.querySelector(`.img-upload__preview`);
   let effectLevel = document.querySelector(`.effect-level__pin`);
   let effectLevelValue = document.querySelector(`.effect-level__value`);
+
   let hashtagInput = document.querySelector(`.text__hashtags`);
 
   const EFFECT_VALUES = {
