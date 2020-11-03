@@ -10,68 +10,11 @@
 
   const HASHTAGS_LENGTH = 5;
 
-  const EFFECT_VALUE = 100;
-
   const re = /^#[A-я\d]*$/;
 
-  // Применение эффекта для изображения
-  let effects = document.querySelectorAll(`.effects__radio`);
   let imgPreview = document.querySelector(`.img-upload__preview`);
-  let effectLevelValue = document.querySelector(`.effect-level__value`);
 
   let hashtagInput = document.querySelector(`.text__hashtags`);
-
-  const EFFECT_VALUES = {
-    'chrome': {
-      min: 0,
-      max: 1,
-      template: `grayscale({value})`
-    },
-    'sepia': {
-      min: 0,
-      max: 1,
-      template: `sepia({value})`
-    },
-    'marvin': {
-      min: 0,
-      max: 100,
-      template: `invert({value}%)`
-    },
-    'phobos': {
-      min: 0,
-      max: 3,
-      template: `blur({value}px)`
-    },
-    'heat': {
-      min: 1,
-      max: 3,
-      template: `brightness({value})`
-    },
-  };
-
-  let effectsIntensive = function (effect) {
-    if (effect.value !== `none`) {
-      let min = EFFECT_VALUES[effect.value].min;
-      let max = EFFECT_VALUES[effect.value].max;
-      let template = EFFECT_VALUES[effect.value].template;
-
-      let result = min + ((max - min) / 100 * effectLevelValue.value);
-      imgPreview.style = `filter: ` + template.replace(`{value}`, result);
-    } else {
-      imgPreview.style = null;
-    }
-  };
-
-  effects.forEach(function (effect) {
-    effect.addEventListener(`change`, function () {
-      imgPreview.classList = null;
-      imgPreview.classList.add(`img-upload__preview`);
-      imgPreview.classList.add(`effects__preview--` + effect.value);
-
-      effectLevelValue.value = EFFECT_VALUE;
-      effectsIntensive(effect);
-    });
-  });
 
   // Редактирование размера изображения
   let controlSmaller = document.querySelector(`.scale__control--smaller`);
@@ -127,8 +70,4 @@
     }
     hashtagInput.reportValidity();
   });
-
-  window.picture = {
-    effectsIntensive
-  };
 })();
