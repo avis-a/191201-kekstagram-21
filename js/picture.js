@@ -17,7 +17,6 @@
   // Применение эффекта для изображения
   let effects = document.querySelectorAll(`.effects__radio`);
   let imgPreview = document.querySelector(`.img-upload__preview`);
-  let effectLevel = document.querySelector(`.effect-level__pin`);
   let effectLevelValue = document.querySelector(`.effect-level__value`);
 
   let hashtagInput = document.querySelector(`.text__hashtags`);
@@ -74,11 +73,6 @@
     });
   });
 
-  effectLevel.addEventListener(`mouseup`, function () {
-    let effect = document.querySelector(`input[name=effect]:checked`);
-    effectsIntensive(effect);
-  });
-
   // Редактирование размера изображения
   let controlSmaller = document.querySelector(`.scale__control--smaller`);
   let controlBigger = document.querySelector(`.scale__control--bigger`);
@@ -133,4 +127,8 @@
     }
     hashtagInput.reportValidity();
   });
+
+  window.picture = {
+    effectsIntensive
+  };
 })();

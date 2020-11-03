@@ -80,9 +80,7 @@
       });
     });
 
-    bigPictureCancel.addEventListener(`click`, function () {
-      closeModal();
-    });
+    bigPictureCancel.addEventListener(`click`, closeModal);
   };
 
   window.load(serverUrl, onSuccess, onError);
