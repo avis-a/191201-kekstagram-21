@@ -20,7 +20,7 @@
   let controlSmaller = document.querySelector(`.scale__control--smaller`);
   let controlBigger = document.querySelector(`.scale__control--bigger`);
   let controlValue = document.querySelector(`.scale__control--value`);
-  controlValue.value = `100%`;
+  // controlValue.value = `100%`;
 
   controlSmaller.addEventListener(`click`, function () {
     let percentNumber = Number(controlValue.value.replace(`%`, ``));

@@ -1,9 +1,14 @@
 'use strict';
+
 (function () {
   // Применение эффекта для изображения
   let effects = document.querySelectorAll(`.effects__radio`);
   let imgPreview = document.querySelector(`.img-upload__preview`);
   let effectLevelValue = document.querySelector(`.effect-level__value`);
+
+  let sliderPin = document.querySelector(`.effect-level__pin`);
+  let sliderLine = document.querySelector(`.effect-level__line`);
+  let sliderDepth = document.querySelector(`.effect-level__depth`);
 
   const EFFECT_VALUE = 100;
 
@@ -48,22 +53,26 @@
     }
   };
 
+  let resetSliderToDefalt = function () {
+    sliderPin.style.left = sliderLine.offsetWidth + `px`;
+    sliderDepth.style.width = `100%`;
+  };
+
+  let effectApply = function (effect) {
+    imgPreview.classList = null;
+    imgPreview.classList.add(`img-upload__preview`);
+    imgPreview.classList.add(`effects__preview--` + effect.value);
+    resetSliderToDefalt();
+
+    effectLevelValue.value = EFFECT_VALUE;
+    effectsIntensive(effect);
+  };
+
   effects.forEach(function (effect) {
     effect.addEventListener(`change`, function () {
-      imgPreview.classList = null;
-      imgPreview.classList.add(`img-upload__preview`);
-      imgPreview.classList.add(`effects__preview--` + effect.value);
-      sliderPin.style.left = sliderLine.offsetWidth + `px`;
-      sliderDepth.style.width = `100%`;
-
-      effectLevelValue.value = EFFECT_VALUE;
-      effectsIntensive(effect);
+      effectApply(effect);
     });
   });
-
-  let sliderPin = document.querySelector(`.effect-level__pin`);
-  let sliderLine = document.querySelector(`.effect-level__line`);
-  let sliderDepth = document.querySelector(`.effect-level__depth`);
 
   sliderPin.addEventListener(`mousedown`, function (evt) {
     evt.preventDefault();
@@ -111,4 +120,9 @@
     document.addEventListener(`mousemove`, onMouseMove);
     document.addEventListener(`mouseup`, onMouseUp);
   });
+
+  window.preview = {
+    effectApply,
+    resetSliderToDefalt
+  };
 })();
