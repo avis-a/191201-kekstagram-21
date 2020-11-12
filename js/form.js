@@ -40,23 +40,25 @@
     document.querySelector(`body`).appendChild(document.importNode(template, true));
 
     let closeButton = document.querySelector(`.${operationStatus}__button`);
+    let modalElement = document.querySelector(`.${operationStatus}`);
 
-    closeButton.addEventListener(`click`, function () {
-      document.querySelector(`.${operationStatus}`).remove();
+    closeButton.addEventListener(`click`, function (evt) {
+      evt.preventDefault();
+      modalElement.remove();
     });
 
     document.querySelector(`.${operationStatus}`).addEventListener(`click`, function (e) {
       let modalWindow = document.querySelector(`.${operationStatus}__inner`);
       if (e.target !== modalWindow) {
         e.preventDefault();
-        document.querySelector(`.${operationStatus}`).remove();
+        modalElement.remove();
       }
     });
 
     document.addEventListener(`keydown`, function (evt) {
       if (evt.key === `Escape` && document.querySelector(`.${operationStatus}`)) {
         evt.preventDefault();
-        document.querySelector(`.${operationStatus}`).remove();
+        modalElement.remove();
       }
     });
   };
