@@ -5,7 +5,7 @@
   let bigPicture = document.querySelector(`.big-picture`);
 
   // Функция для создания блока комментария
-  let createCommentDOMElement = function (template, comment) {
+  let createCommentDOMElement = (template, comment) => {
     let commentTemplate = template.cloneNode(true);
 
     commentTemplate.querySelector(`.social__picture`).src = comment.avatar;
@@ -16,19 +16,19 @@
   };
 
 
-  let closeModal = function () {
+  let closeModal = () => {
     bigPicture.classList.add(`hidden`);
     document.querySelector(`body`).classList.remove(`modal-open`);
   };
 
-  let escPress = function (evt) {
+  let escPress = (evt) => {
     if (evt.key === `Escape`) {
       evt.preventDefault();
       closeModal();
     }
   };
 
-  let onError = function (message) {
+  let onError = (message) => {
     let errorTemplate = document.querySelector(`#server-error`).content;
     errorTemplate.querySelector(`.server-error__title`).textContent = message;
     document.querySelector(`body`).appendChild(errorTemplate);
@@ -36,12 +36,12 @@
 
     let closeButton = document.querySelector(`.server-error__button`);
 
-    closeButton.addEventListener(`click`, function () {
+    closeButton.addEventListener(`click`, () => {
       document.querySelector(`.server-error`).remove();
     });
   };
 
-  let onSuccess = function (data) {
+  let onSuccess = (data) => {
     window.gallery.appendPhotos(data);
 
     document.querySelector(`.img-filters`).classList.remove(`img-filters--inactive`);
@@ -51,8 +51,8 @@
 
     let bigPictureCancel = document.querySelector(`.big-picture__cancel`);
 
-    littlePictures.forEach(function (littlePicture) {
-      littlePicture.addEventListener(`click`, function () {
+    littlePictures.forEach((littlePicture) => {
+      littlePicture.addEventListener(`click`, () => {
         bigPicture.classList.remove(`hidden`);
         document.querySelector(`body`).classList.add(`modal-open`);
         document.addEventListener(`keydown`, escPress);
@@ -67,7 +67,7 @@
 
         let documentFragment = document.createDocumentFragment();
 
-        littlePictureData.comments.forEach(function (comment) {
+        littlePictureData.comments.forEach((comment) => {
           let commentTemplate = document.querySelector(`#comment`).content;
           let commentDOM = createCommentDOMElement(commentTemplate, comment);
           documentFragment.append(commentDOM);

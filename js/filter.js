@@ -3,12 +3,12 @@
 (function () {
 
   // Функция для сравнения фотографий по кол-ву комментариев
-  let comparePhotos = function (a, b) {
+  let comparePhotos = (a, b) => {
     return a.comments.length - b.comments.length;
   };
 
   // Фильтрация фотографий
-  let filterPhotos = function (dataArray, filterId) {
+  let filterPhotos = (dataArray, filterId) => {
     let resultPhotos = [];
     switch (filterId) {
       case `filter-random`:
@@ -22,7 +22,7 @@
           }
         }
 
-        randomIndexes.forEach(function (randomIndex) {
+        randomIndexes.forEach((randomIndex) => {
           resultPhotos.push(dataArray[randomIndex]);
         });
 
@@ -37,16 +37,16 @@
     return resultPhotos;
   };
 
-  let handleFilterButtons = function (data) {
+  let handleFilterButtons = (data) => {
     let filterButtons = document.querySelectorAll(`.img-filters__button`);
     for (let filterButton of filterButtons) {
-      filterButton.addEventListener(`click`, function () {
+      filterButton.addEventListener(`click`, () => {
         let currentActiveButton = document.querySelector(`.img-filters__button--active`);
         if (currentActiveButton.id === filterButton.id) {
           return;
         }
 
-        window.util.debounce(function () {
+        window.util.debounce(() => {
           currentActiveButton.classList.remove(`img-filters__button--active`);
           filterButton.classList.add(`img-filters__button--active`);
 

@@ -7,14 +7,14 @@
       return Math.floor(Math.random() * (max - min)) + min;
     },
 
-    debounce: function (cb) {
+    debounce: (cb) => {
       let lastTimeout = null;
 
-      return function (...parameters) {
+      return (...parameters) => {
         if (lastTimeout) {
           window.clearTimeout(lastTimeout);
         }
-        lastTimeout = window.setTimeout(function () {
+        lastTimeout = window.setTimeout(() => {
           cb(...parameters);
         }, DEBOUNCE_INTERVAL);
       };
