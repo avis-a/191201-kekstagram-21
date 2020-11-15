@@ -10,18 +10,29 @@
   let commentTextarea = document.querySelector(`.text__description`);
   let form = document.querySelector(`.img-upload__form`);
 
+  let closeModal = () => {
+    uploadOverlay.classList.add(`hidden`);
+    document.querySelector(`body`).classList.remove(`modal-open`);
+
+    uploadCancel.removeEventListener(`click`, closeModal);
+    document.removeEventListener(`keydown`, escPress);
+  };
+
+  let escPress = (evt) => {
+    if (evt.key === `Escape` && document.activeElement !== hashtagInput && document.activeElement !== commentTextarea) {
+      evt.preventDefault();
+      closeModal();
+    }
+  };
+
   uploadFile.addEventListener(`change`, () => {
     uploadOverlay.classList.remove(`hidden`);
 
     resetForm();
 
     document.querySelector(`body`).classList.add(`modal-open`);
-    document.addEventListener(`keydown`, (evt) => {
-      if (evt.key === `Escape` && document.activeElement !== hashtagInput && document.activeElement !== commentTextarea) {
-        evt.preventDefault();
-        closeModal();
-      }
-    });
+    uploadCancel.addEventListener(`click`, closeModal);
+    document.addEventListener(`keydown`, escPress);
 
     // Валидация поля комментарий
     commentTextarea.addEventListener(`input`, () => {
@@ -42,25 +53,41 @@
     let closeButton = document.querySelector(`.${operationStatus}__button`);
     let modalElement = document.querySelector(`.${operationStatus}`);
 
-    closeButton.addEventListener(`click`, (evt) => {
+    let closeButtonClickHandler = (evt) => {
       evt.preventDefault();
       modalElement.remove();
-    });
 
-    document.querySelector(`.${operationStatus}`).addEventListener(`click`, (evt) => {
+      closeButton.removeEventListener(`click`, closeButtonClickHandler);
+      document.querySelector(`.${operationStatus}`).removeEventListener(`click`, closeButtonByEmptyArea);
+      document.removeEventListener(`keydown`, closeButtonByEscape);
+    };
+
+    let closeButtonByEmptyArea = (evt) => {
       let modalWindow = document.querySelector(`.${operationStatus}__inner`);
       if (evt.target !== modalWindow) {
         evt.preventDefault();
         modalElement.remove();
-      }
-    });
 
-    document.addEventListener(`keydown`, (evt) => {
+        closeButton.removeEventListener(`click`, closeButtonClickHandler);
+        document.querySelector(`.${operationStatus}`).removeEventListener(`click`, closeButtonByEmptyArea);
+        document.removeEventListener(`keydown`, closeButtonByEscape);
+      }
+    };
+
+    let closeButtonByEscape = (evt) => {
       if (evt.key === `Escape` && document.querySelector(`.${operationStatus}`)) {
         evt.preventDefault();
         modalElement.remove();
+
+        closeButton.removeEventListener(`click`, closeButtonClickHandler);
+        document.querySelector(`.${operationStatus}`).removeEventListener(`click`, closeButtonByEmptyArea);
+        document.removeEventListener(`keydown`, closeButtonByEscape);
       }
-    });
+    };
+
+    closeButton.addEventListener(`click`, closeButtonClickHandler);
+    document.querySelector(`.${operationStatus}`).addEventListener(`click`, closeButtonByEmptyArea);
+    document.addEventListener(`keydown`, closeButtonByEscape);
   };
 
   let resetForm = () => {
@@ -72,15 +99,6 @@
     hashtagInput.value = ``;
     commentTextarea.value = ``;
   };
-
-  let closeModal = () => {
-    uploadOverlay.classList.add(`hidden`);
-    document.querySelector(`body`).classList.remove(`modal-open`);
-  };
-
-  uploadCancel.addEventListener(`click`, () => {
-    closeModal();
-  });
 
   form.addEventListener(`submit`, (evt) => {
     window.upload(new FormData(form), (response) => {

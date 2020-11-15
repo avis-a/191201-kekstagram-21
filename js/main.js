@@ -3,6 +3,7 @@
 (function () {
   const serverUrl = `https://21.javascript.pages.academy/kekstagram/data`;
   let bigPicture = document.querySelector(`.big-picture`);
+  let bigPictureCancel = document.querySelector(`.big-picture__cancel`);
 
   // Функция для создания блока комментария
   let createCommentDOMElement = (template, comment) => {
@@ -19,6 +20,9 @@
   let closeModal = () => {
     bigPicture.classList.add(`hidden`);
     document.querySelector(`body`).classList.remove(`modal-open`);
+
+    document.addEventListener(`keydown`, escPress);
+    bigPictureCancel.addEventListener(`click`, closeModal);
   };
 
   let escPress = (evt) => {
@@ -48,8 +52,6 @@
     window.filter.handleFilterButtons(data);
 
     let littlePictures = document.querySelectorAll(`a.picture`);
-
-    let bigPictureCancel = document.querySelector(`.big-picture__cancel`);
 
     littlePictures.forEach((littlePicture) => {
       littlePicture.addEventListener(`click`, () => {
