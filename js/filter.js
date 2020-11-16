@@ -38,10 +38,10 @@
   };
 
   const handleFilterButtons = (data) => {
-    let filterButtons = document.querySelectorAll(`.img-filters__button`);
+    const filterButtons = document.querySelectorAll(`.img-filters__button`);
     for (let filterButton of filterButtons) {
       filterButton.addEventListener(`click`, () => {
-        let currentActiveButton = document.querySelector(`.img-filters__button--active`);
+        const currentActiveButton = document.querySelector(`.img-filters__button--active`);
         if (currentActiveButton.id === filterButton.id) {
           return;
         }
@@ -51,7 +51,7 @@
           filterButton.classList.add(`img-filters__button--active`);
 
           window.gallery.clearPhotos();
-          let resultPhotos = filterPhotos(data, filterButton.id);
+          const resultPhotos = filterPhotos(data, filterButton.id);
           window.gallery.appendPhotos(resultPhotos);
         })();
       });
