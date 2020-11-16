@@ -10,7 +10,7 @@
   let commentTextarea = document.querySelector(`.text__description`);
   let form = document.querySelector(`.img-upload__form`);
 
-  let closeModal = () => {
+  const closeModal = () => {
     uploadOverlay.classList.add(`hidden`);
     document.querySelector(`body`).classList.remove(`modal-open`);
 
@@ -18,7 +18,7 @@
     document.removeEventListener(`keydown`, escPress);
   };
 
-  let escPress = (evt) => {
+  const escPress = (evt) => {
     if (evt.key === `Escape` && document.activeElement !== hashtagInput && document.activeElement !== commentTextarea) {
       evt.preventDefault();
       closeModal();
@@ -46,41 +46,41 @@
     });
   });
 
-  let onUploadResult = (operationStatus) => {
+  const onUploadResult = (operationStatus) => {
     let template = document.querySelector(`#${operationStatus}`).content;
     document.querySelector(`body`).appendChild(document.importNode(template, true));
 
     let closeButton = document.querySelector(`.${operationStatus}__button`);
     let modalElement = document.querySelector(`.${operationStatus}`);
 
-    let closeButtonClickHandler = (evt) => {
+    const closeButtonClickHandler = (evt) => {
       evt.preventDefault();
       modalElement.remove();
 
       closeButton.removeEventListener(`click`, closeButtonClickHandler);
-      document.querySelector(`.${operationStatus}`).removeEventListener(`click`, closeButtonByEmptyArea);
+      modalElement.removeEventListener(`click`, closeButtonByEmptyArea);
       document.removeEventListener(`keydown`, closeButtonByEscape);
     };
 
-    let closeButtonByEmptyArea = (evt) => {
+    const closeButtonByEmptyArea = (evt) => {
       let modalWindow = document.querySelector(`.${operationStatus}__inner`);
       if (evt.target !== modalWindow) {
         evt.preventDefault();
         modalElement.remove();
 
         closeButton.removeEventListener(`click`, closeButtonClickHandler);
-        document.querySelector(`.${operationStatus}`).removeEventListener(`click`, closeButtonByEmptyArea);
+        modalElement.removeEventListener(`click`, closeButtonByEmptyArea);
         document.removeEventListener(`keydown`, closeButtonByEscape);
       }
     };
 
-    let closeButtonByEscape = (evt) => {
+    const closeButtonByEscape = (evt) => {
       if (evt.key === `Escape` && document.querySelector(`.${operationStatus}`)) {
         evt.preventDefault();
         modalElement.remove();
 
         closeButton.removeEventListener(`click`, closeButtonClickHandler);
-        document.querySelector(`.${operationStatus}`).removeEventListener(`click`, closeButtonByEmptyArea);
+        modalElement.removeEventListener(`click`, closeButtonByEmptyArea);
         document.removeEventListener(`keydown`, closeButtonByEscape);
       }
     };
@@ -90,7 +90,7 @@
     document.addEventListener(`keydown`, closeButtonByEscape);
   };
 
-  let resetForm = () => {
+  const resetForm = () => {
     document.getElementById(`effect-none`).checked = true;
     window.preview.effectApply(document.querySelector(`input[name="effect"]:checked`));
 

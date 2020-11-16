@@ -3,12 +3,12 @@
 (function () {
 
   // Функция для сравнения фотографий по кол-ву комментариев
-  let comparePhotos = (a, b) => {
+  const comparePhotos = (a, b) => {
     return a.comments.length - b.comments.length;
   };
 
   // Фильтрация фотографий
-  let filterPhotos = (dataArray, filterId) => {
+  const filterPhotos = (dataArray, filterId) => {
     let resultPhotos = [];
     switch (filterId) {
       case `filter-random`:
@@ -37,7 +37,7 @@
     return resultPhotos;
   };
 
-  let handleFilterButtons = (data) => {
+  const handleFilterButtons = (data) => {
     let filterButtons = document.querySelectorAll(`.img-filters__button`);
     for (let filterButton of filterButtons) {
       filterButton.addEventListener(`click`, () => {

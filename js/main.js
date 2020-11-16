@@ -8,7 +8,7 @@
   let bigPictureCancel = document.querySelector(`.big-picture__cancel`);
 
   // Функция для создания блока комментария
-  let createCommentDOMElement = (template, comment) => {
+  const createCommentDOMElement = (template, comment) => {
     let commentTemplate = template.cloneNode(true);
 
     commentTemplate.querySelector(`.social__picture`).src = comment.avatar;
@@ -18,7 +18,7 @@
     return commentTemplate;
   };
 
-  let closeModal = () => {
+  const closeModal = () => {
     bigPicture.classList.add(`hidden`);
     document.querySelector(`body`).classList.remove(`modal-open`);
 
@@ -26,14 +26,14 @@
     bigPictureCancel.removeEventListener(`click`, closeModal);
   };
 
-  let escPress = (evt) => {
+  const escPress = (evt) => {
     if (evt.key === `Escape`) {
       evt.preventDefault();
       closeModal();
     }
   };
 
-  let onError = (message) => {
+  const onError = (message) => {
     let errorTemplate = document.querySelector(`#server-error`).content;
     errorTemplate.querySelector(`.server-error__title`).textContent = message;
     document.querySelector(`body`).appendChild(errorTemplate);
@@ -46,7 +46,7 @@
     });
   };
 
-  let onSuccess = (data) => {
+  const onSuccess = (data) => {
     window.gallery.appendPhotos(data);
 
     document.querySelector(`.img-filters`).classList.remove(`img-filters--inactive`);
@@ -59,6 +59,7 @@
         bigPicture.classList.remove(`hidden`);
         document.querySelector(`body`).classList.add(`modal-open`);
         document.addEventListener(`keydown`, escPress);
+        bigPictureCancel.addEventListener(`click`, closeModal);
 
         let littlePictureUrl = littlePicture.querySelector(`.picture__img`).getAttribute(`src`);
         let littlePictureData = data.find((photo) => photo.url === littlePictureUrl);
@@ -71,7 +72,7 @@
         littlePictureData.currentCommentsCount = 0;
         bigPicture.querySelector(`.comments-loader`).classList.remove(`hidden`);
 
-        let loadMoreComments = () => {
+        const loadMoreComments = () => {
           let range = littlePictureData.comments.slice(littlePictureData.currentCommentsCount, littlePictureData.currentCommentsCount + STEP_COUNT);
           littlePictureData.currentCommentsCount += range.length;
 
@@ -102,8 +103,6 @@
         bigPicture.querySelector(`.comments-loader`).addEventListener(`click`, loadMoreComments);
       });
     });
-
-    bigPictureCancel.addEventListener(`click`, closeModal);
   };
 
   window.load(serverUrl, onSuccess, onError);

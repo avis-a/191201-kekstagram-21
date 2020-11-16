@@ -40,7 +40,7 @@
     },
   };
 
-  let effectsIntensive = (effect) => {
+  const effectsIntensive = (effect) => {
     if (effect.value !== `none`) {
       let min = EFFECT_VALUES[effect.value].min;
       let max = EFFECT_VALUES[effect.value].max;
@@ -53,12 +53,12 @@
     }
   };
 
-  let resetSliderToDefalt = () => {
+  const resetSliderToDefalt = () => {
     sliderPin.style.left = sliderLine.offsetWidth + `px`;
     sliderDepth.style.width = `100%`;
   };
 
-  let effectApply = (effect) => {
+  const effectApply = (effect) => {
     imgPreview.classList = null;
     imgPreview.classList.add(`img-upload__preview`);
     imgPreview.classList.add(`effects__preview--` + effect.value);
@@ -82,7 +82,7 @@
       x: evt.clientX
     };
 
-    let onMouseMove = (moveEvt) => {
+    const onMouseMove = (moveEvt) => {
       moveEvt.preventDefault();
 
       let shift = {
@@ -110,7 +110,7 @@
       effectsIntensive(effect);
     };
 
-    let onMouseUp = (upEvt) => {
+    const onMouseUp = (upEvt) => {
       upEvt.preventDefault();
 
       document.removeEventListener(`mousemove`, onMouseMove);
