@@ -3,12 +3,12 @@
 (function () {
 
   // Функция для сравнения фотографий по кол-ву комментариев
-  let comparePhotos = function (a, b) {
+  const comparePhotos = (a, b) => {
     return a.comments.length - b.comments.length;
   };
 
   // Фильтрация фотографий
-  let filterPhotos = function (dataArray, filterId) {
+  const filterPhotos = (dataArray, filterId) => {
     let resultPhotos = [];
     switch (filterId) {
       case `filter-random`:
@@ -22,7 +22,7 @@
           }
         }
 
-        randomIndexes.forEach(function (randomIndex) {
+        randomIndexes.forEach((randomIndex) => {
           resultPhotos.push(dataArray[randomIndex]);
         });
 
@@ -37,21 +37,21 @@
     return resultPhotos;
   };
 
-  let handleFilterButtons = function (data) {
-    let filterButtons = document.querySelectorAll(`.img-filters__button`);
+  const handleFilterButtons = (data) => {
+    const filterButtons = document.querySelectorAll(`.img-filters__button`);
     for (let filterButton of filterButtons) {
-      filterButton.addEventListener(`click`, function () {
-        let currentActiveButton = document.querySelector(`.img-filters__button--active`);
+      filterButton.addEventListener(`click`, () => {
+        const currentActiveButton = document.querySelector(`.img-filters__button--active`);
         if (currentActiveButton.id === filterButton.id) {
           return;
         }
 
-        window.util.debounce(function () {
+        window.util.debounce(() => {
           currentActiveButton.classList.remove(`img-filters__button--active`);
           filterButton.classList.add(`img-filters__button--active`);
 
           window.gallery.clearPhotos();
-          let resultPhotos = filterPhotos(data, filterButton.id);
+          const resultPhotos = filterPhotos(data, filterButton.id);
           window.gallery.appendPhotos(resultPhotos);
         })();
       });

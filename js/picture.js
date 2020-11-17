@@ -21,7 +21,7 @@
   let controlBigger = document.querySelector(`.scale__control--bigger`);
   let controlValue = document.querySelector(`.scale__control--value`);
 
-  controlSmaller.addEventListener(`click`, function () {
+  controlSmaller.addEventListener(`click`, () => {
     let percentNumber = Number(controlValue.value.replace(`%`, ``));
     percentNumber -= ZOOM_STEP;
 
@@ -31,7 +31,7 @@
     }
   });
 
-  controlBigger.addEventListener(`click`, function () {
+  controlBigger.addEventListener(`click`, () => {
     let percentNumber = Number(controlValue.value.replace(`%`, ``));
     percentNumber += ZOOM_STEP;
 
@@ -42,7 +42,7 @@
   });
 
   // Валидация хеш-тегов
-  hashtagInput.addEventListener(`input`, function () {
+  hashtagInput.addEventListener(`input`, () => {
     let hashtags = hashtagInput.value.split(` `).filter((x) => x !== ``);
 
     if (hashtags.length === 0) {
