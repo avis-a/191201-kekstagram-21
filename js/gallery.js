@@ -42,6 +42,29 @@
     }
   };
 
+  let littlePictureData = {};
+
+  const loadMoreComments = () => {
+    let range = littlePictureData.comments.slice(littlePictureData.currentCommentsCount, littlePictureData.currentCommentsCount + STEP_COUNT);
+    littlePictureData.currentCommentsCount += range.length;
+
+    if (littlePictureData.currentCommentsCount >= littlePictureData.comments.length) {
+      bigPicture.querySelector(`.comments-loader`).classList.add(`hidden`);
+    }
+
+    let documentFragmentComment = document.createDocumentFragment();
+
+    range.forEach((comment) => {
+      let commentTemplate = document.querySelector(`#comment`).content;
+      let commentDOM = createCommentDOMElement(commentTemplate, comment);
+      documentFragmentComment.append(commentDOM);
+    });
+
+    document.querySelector(`.social__comments`).appendChild(documentFragmentComment);
+
+    bigPicture.querySelector(`.comments-view-count`).textContent = littlePictureData.currentCommentsCount;
+  };
+
   // Добавляет массив фотографий в разметку
   const appendPhotos = (photos) => {
     let documentFragment = document.createDocumentFragment(photos);
@@ -55,29 +78,6 @@
     document.querySelector(`.pictures`).appendChild(documentFragment);
 
     let littlePictures = document.querySelectorAll(`a.picture`);
-
-    let littlePictureData = {};
-
-    const loadMoreComments = () => {
-      let range = littlePictureData.comments.slice(littlePictureData.currentCommentsCount, littlePictureData.currentCommentsCount + STEP_COUNT);
-      littlePictureData.currentCommentsCount += range.length;
-
-      if (littlePictureData.currentCommentsCount >= littlePictureData.comments.length) {
-        bigPicture.querySelector(`.comments-loader`).classList.add(`hidden`);
-      }
-
-      let documentFragmentComment = document.createDocumentFragment();
-
-      range.forEach((comment) => {
-        let commentTemplate = document.querySelector(`#comment`).content;
-        let commentDOM = createCommentDOMElement(commentTemplate, comment);
-        documentFragmentComment.append(commentDOM);
-      });
-
-      document.querySelector(`.social__comments`).appendChild(documentFragmentComment);
-
-      bigPicture.querySelector(`.comments-view-count`).textContent = littlePictureData.currentCommentsCount;
-    };
 
     littlePictures.forEach((littlePicture) => {
       littlePicture.addEventListener(`click`, () => {
