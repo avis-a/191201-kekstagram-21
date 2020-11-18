@@ -46,10 +46,10 @@
           return;
         }
 
-        window.util.debounce(() => {
-          currentActiveButton.classList.remove(`img-filters__button--active`);
-          filterButton.classList.add(`img-filters__button--active`);
+        currentActiveButton.classList.remove(`img-filters__button--active`);
+        filterButton.classList.add(`img-filters__button--active`);
 
+        window.util.debounce(() => {
           window.gallery.clearPhotos();
           const resultPhotos = filterPhotos(data, filterButton.id);
           window.gallery.appendPhotos(resultPhotos);
