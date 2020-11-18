@@ -2,6 +2,8 @@
 
 (function () {
   // Загрузка изображения и показ формы редактирования
+  const MAX_LENGTH_FOR_DESC = 140;
+
   let uploadFile = document.querySelector(`#upload-file`);
   let uploadCancel = document.querySelector(`#upload-cancel`);
   let uploadOverlay = document.querySelector(`.img-upload__overlay`);
@@ -39,7 +41,7 @@
       let comment = commentTextarea.value;
       commentTextarea.setCustomValidity(``);
 
-      if (comment.length >= 141) {
+      if (comment.length > MAX_LENGTH_FOR_DESC) {
         commentTextarea.setCustomValidity(`Комментарий не может составлять больше 140 символов.`);
       }
       commentTextarea.reportValidity();
