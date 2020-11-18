@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-  const DEBOUNCE_INTERVAL = 300;
+  const DEBOUNCE_INTERVAL = 500;
 
   window.util = {
     getRandomInt(min, max) {

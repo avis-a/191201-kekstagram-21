@@ -2,7 +2,7 @@
 
 (function () {
 
-  let commentsArray = [
+  const COMMENTS_ARRAY = [
     `Всё отлично!`,
     `В целом всё неплохо. Но не всё.`,
     `Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.`,
@@ -11,7 +11,7 @@
     `Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!`
   ];
 
-  let namesArray = [
+  const NAMES_ARRAY = [
     `Артём`,
     `Вася`,
     `Коля`,
@@ -40,8 +40,8 @@
       for (let i = 0; i < randomCommentsCount; i++) {
         commentsRandom.push({
           avatar: `img/avatar-${window.util.getRandomInt(1, 10)}.svg`,
-          message: commentsArray[window.util.getRandomInt(0, commentsArray.length - 1)],
-          name: namesArray[window.util.getRandomInt(0, namesArray.length - 1)],
+          message: COMMENTS_ARRAY[window.util.getRandomInt(0, COMMENTS_ARRAY.length - 1)],
+          name: NAMES_ARRAY[window.util.getRandomInt(0, NAMES_ARRAY.length - 1)],
         });
       }
 

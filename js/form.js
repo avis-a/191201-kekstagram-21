@@ -39,7 +39,7 @@
       let comment = commentTextarea.value;
       commentTextarea.setCustomValidity(``);
 
-      if (comment.length >= 140) {
+      if (comment.length >= 141) {
         commentTextarea.setCustomValidity(`Комментарий не может составлять больше 140 символов.`);
       }
       commentTextarea.reportValidity();
@@ -48,7 +48,7 @@
 
   const onUploadResult = (operationStatus) => {
     let template = document.querySelector(`#${operationStatus}`).content;
-    document.querySelector(`body`).appendChild(document.importNode(template, true));
+    document.querySelector(`main`).appendChild(document.importNode(template, true));
 
     let closeButton = document.querySelector(`.${operationStatus}__button`);
     let modalElement = document.querySelector(`.${operationStatus}`);
@@ -91,7 +91,7 @@
   };
 
   const resetForm = () => {
-    document.getElementById(`effect-none`).checked = true;
+    document.querySelector(`#effect-none`).checked = true;
     window.preview.effectApply(document.querySelector(`input[name="effect"]:checked`));
 
     window.preview.resetSliderToDefalt();
