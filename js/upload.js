@@ -11,6 +11,10 @@
       onResult(xhr);
     });
 
+    xhr.addEventListener(`error`, function () {
+      onResult(xhr);
+    });
+
     xhr.open(`POST`, URL);
     xhr.send(data);
   };

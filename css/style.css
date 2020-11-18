@@ -729,6 +729,12 @@ main {
   border-radius: 5px;
 }
 
+.text__hashtags:invalid,
+.text__description:invalid {
+  outline: none;
+  border: 2px solid red;
+}
+
 .text__description {
   width: 450px;
   height: 100px;

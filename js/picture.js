@@ -10,7 +10,7 @@
 
   const HASHTAGS_LENGTH = 5;
 
-  const re = /^#[A-я\d]*$/;
+  const RE = /^#[A-я\d]*$/;
 
   let imgPreview = document.querySelector(`.img-upload__preview`);
 
@@ -48,7 +48,8 @@
     if (hashtags.length === 0) {
       return;
     } else if (hashtags.length > HASHTAGS_LENGTH) {
-      hashtagInput.setCustomValidity(`Нельзя указать больше пяти хэш-тегов.`);
+      hashtagInput.setCustomValidity(`Нельзя указать больше ${HASHTAGS_LENGTH} хэш-тегов.`);
+      hashtagInput.reportValidity();
       return;
     }
 
@@ -61,7 +62,7 @@
         hashtagInput.setCustomValidity(`Максимальная длина одного хэш-тега 20 символов, включая решётку.`);
       } else if (hashtags.filter((x) => x.toLowerCase() === hashtag.toLowerCase()).length > 1) {
         hashtagInput.setCustomValidity(`Такой хэштег уже есть.`);
-      } else if (!re.test(hashtag)) {
+      } else if (!RE.test(hashtag)) {
         hashtagInput.setCustomValidity(`Значение не может содержать спец. символы`);
       } else {
         hashtagInput.setCustomValidity(``);

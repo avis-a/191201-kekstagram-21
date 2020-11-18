@@ -13,27 +13,27 @@
   const EFFECT_VALUE = 100;
 
   const EFFECT_VALUES = {
-    'chrome': {
+    chrome: {
       min: 0,
       max: 1,
       template: `grayscale({value})`
     },
-    'sepia': {
+    sepia: {
       min: 0,
       max: 1,
       template: `sepia({value})`
     },
-    'marvin': {
+    marvin: {
       min: 0,
       max: 100,
       template: `invert({value}%)`
     },
-    'phobos': {
+    phobos: {
       min: 0,
       max: 3,
       template: `blur({value}px)`
     },
-    'heat': {
+    heat: {
       min: 1,
       max: 3,
       template: `brightness({value})`
@@ -50,6 +50,7 @@
       imgPreview.style = `filter: ` + template.replace(`{value}`, result);
     } else {
       imgPreview.style = null;
+      document.querySelector(`.img-upload__effect-level`).hidden = true;
     }
   };
 
@@ -59,7 +60,8 @@
   };
 
   let effectApply = function (effect) {
-    imgPreview.classList = null;
+    document.querySelector(`.img-upload__effect-level`).hidden = false;
+    imgPreview.classList = ``;
     imgPreview.classList.add(`img-upload__preview`);
     imgPreview.classList.add(`effects__preview--` + effect.value);
     resetSliderToDefalt();

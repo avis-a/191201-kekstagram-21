@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  let bigPicture = document.querySelector(`.big-picture`);
 
   // Функция для создания DOM элемента по шаблону
   let createPhotoDOMElement = function (template, photo) {
@@ -11,6 +12,29 @@
     pictureTemplate.querySelector(`.picture__comments`).textContent = photo.comments.length;
 
     return pictureTemplate;
+  };
+
+  // Функция для создания блока комментария
+  let createCommentDOMElement = function (template, comment) {
+    let commentTemplate = template.cloneNode(true);
+
+    commentTemplate.querySelector(`.social__picture`).src = comment.avatar;
+    commentTemplate.querySelector(`.social__picture`).alt = comment.name;
+    commentTemplate.querySelector(`.social__text`).textContent = comment.message;
+
+    return commentTemplate;
+  };
+
+  let closeModal = function () {
+    bigPicture.classList.add(`hidden`);
+    document.querySelector(`body`).classList.remove(`modal-open`);
+  };
+
+  let escPress = function (evt) {
+    if (evt.key === `Escape`) {
+      evt.preventDefault();
+      closeModal();
+    }
   };
 
   // Добавляет массив фотографий в разметку
@@ -24,6 +48,41 @@
     });
 
     document.querySelector(`.pictures`).appendChild(documentFragment);
+
+    let littlePictures = document.querySelectorAll(`a.picture`);
+
+    littlePictures.forEach(function (littlePicture) {
+      littlePicture.addEventListener(`click`, function () {
+        bigPicture.classList.remove(`hidden`);
+        document.querySelector(`body`).classList.add(`modal-open`);
+        document.addEventListener(`keydown`, escPress);
+
+        let littlePictureUrl = littlePicture.querySelector(`.picture__img`).getAttribute(`src`);
+        let littlePictureData = photos.find((photo) => photo.url === littlePictureUrl);
+
+        bigPicture.querySelector(`.big-picture__img > img`).src = littlePictureData.url;
+        bigPicture.querySelector(`.likes-count`).textContent = littlePictureData.likes;
+        bigPicture.querySelector(`.comments-count`).textContent = littlePictureData.comments.length;
+        bigPicture.querySelector(`.social__caption`).textContent = littlePictureData.description;
+
+        let documentFragmentComment = document.createDocumentFragment();
+
+        littlePictureData.comments.forEach(function (comment) {
+          let commentTemplate = document.querySelector(`#comment`).content;
+          let commentDOM = createCommentDOMElement(commentTemplate, comment);
+          documentFragmentComment.append(commentDOM);
+        });
+
+        document.querySelector(`.social__comments`).appendChild(documentFragmentComment);
+
+        bigPicture.querySelector(`.social__comment-count`).classList.add(`hidden`);
+        bigPicture.querySelector(`.comments-loader`).classList.add(`hidden`);
+      });
+    });
+
+    let bigPictureCancel = document.querySelector(`.big-picture__cancel`);
+
+    bigPictureCancel.addEventListener(`click`, closeModal);
   };
 
   // Очистка блока .pictures от фотографий
